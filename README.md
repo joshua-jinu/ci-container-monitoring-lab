@@ -32,11 +32,11 @@ docker compose logs -f app    # follow the application logs
 
 Services once up:
 
-| Service     | URL                      |
-|-------------|--------------------------|
-| App         | http://localhost:8080    |
-| Prometheus  | http://localhost:9090    |
-| Grafana     | http://localhost:3000    |
+| Service    | URL                   |
+| ---------- | --------------------- |
+| App        | http://localhost:8080 |
+| Prometheus | http://localhost:9090 |
+| Grafana    | http://localhost:3000 |
 
 Grafana logs in anonymously (admin/admin also works). Open the **Service
 Overview** dashboard under the **Lab** folder.
@@ -101,3 +101,25 @@ commit and redeploy, or rebuild from a previous tag:
 git revert <commit>          # revert a bad release
 docker compose up -d --build # redeploy the reverted version
 ```
+
+## Cloud mapping
+
+The same local flow maps cleanly to a managed cloud release without changing the
+application behavior:
+
+1. Build the image in CI and push it to Artifact Registry.
+2. Deploy that image to Cloud Run with a service configuration that exposes the
+   same `PORT` and health endpoint, then route traffic through the public URL.
+3. Use the Cloud Monitoring metrics endpoint and dashboards to observe request
+   count, latency, and health signals from the running service.
+
+In practice, the local equivalents are:
+
+- Local image build: `docker build -t ci-container-monitoring-lab:local .`
+- Cloud build: `gcloud builds submit --tag REGION-docker.pkg.dev/PROJECT_ID/REPO/ci-container-monitoring-lab`
+- Local deploy: `docker compose up -d`
+- Cloud deploy: `gcloud run deploy ci-container-monitoring-lab --image REGION-docker.pkg.dev/PROJECT_ID/REPO/ci-container-monitoring-lab --region REGION`
+- Local observability: Prometheus + Grafana dashboards
+- Cloud observability: Cloud Monitoring + Cloud Run metrics / logs
+
+This is a written mapping only; it does not require billing or a live cloud deployment.
