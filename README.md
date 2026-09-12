@@ -32,11 +32,11 @@ docker compose logs -f app    # follow the application logs
 
 Services once up:
 
-| Service     | URL                      |
-|-------------|--------------------------|
-| App         | http://localhost:8080    |
-| Prometheus  | http://localhost:9090    |
-| Grafana     | http://localhost:3000    |
+| Service    | URL                   |
+| ---------- | --------------------- |
+| App        | http://localhost:8080 |
+| Prometheus | http://localhost:9090 |
+| Grafana    | http://localhost:3000 |
 
 Grafana logs in anonymously (admin/admin also works). Open the **Service
 Overview** dashboard under the **Lab** folder.

@@ -3,7 +3,7 @@ global:
   evaluation_interval: 5s
 
 scrape_configs:
-  - job_name: 'ci-container-monitoring-lab'
+  - job_name: "ci-container-monitoring-lab"
     metrics_path: /metrics
     static_configs:
-      - targets: ['app:3000']
+      - targets: ["app:3000"]
