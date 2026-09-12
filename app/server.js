@@ -10,9 +10,9 @@ const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const SERVICE_NAME = process.env.SERVICE_NAME || 'ci-container-monitoring-lab';
 
-// v2.0.0: guard the service behind a maintenance flag while the payment
-// subsystem is being migrated. Defaults to "on" so it is safe by default.
-const MAINTENANCE = process.env.MAINTENANCE_MODE || 'on';
+// Allow the app to run normally by default; a deployment can opt into
+// maintenance mode explicitly without breaking health checks in local or CI.
+const MAINTENANCE = process.env.MAINTENANCE_MODE || 'off';
 
 // ---------------------------------------------------------------------------
 // Prometheus metrics
